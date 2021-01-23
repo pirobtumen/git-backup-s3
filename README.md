@@ -27,7 +27,12 @@ TODO :D
 Set up your environment variables inside `.env` file:
 
 ```
-TODO :D
+GIT_USER=
+GIT_TOKEN=
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_S3_BUCKET=
+AWS_REGION=
 ```
 
 Create the file `repos.json`:
