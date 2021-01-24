@@ -23,7 +23,14 @@ I run my own private Gitlab (on-premise). I want a fully automatic periodic scri
 
 ## Docker
 
-Soon :D
+```
+docker run --rm \
+--env-file=.env \
+-v ${PWD}/repos.json:/git-backup-s3/repos.json \
+pirobtumen/git-backup-s3
+```
+
+> Files .env and repos.json are required. Check the Configuration section.
 
 ## Configuration
 
