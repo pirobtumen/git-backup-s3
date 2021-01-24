@@ -6,6 +6,8 @@ build:
 	docker build . --tag ${IMAGE}
 
 # DEBUG
+# mkdir backups
+# sudo chown -R 100:101 backups
 # -v ${PWD}/backups:/git-backup-s3/backups
 
 run: build
