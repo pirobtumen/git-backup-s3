@@ -1,30 +1,33 @@
-# Git backup to S3
+<br />
+<p align="center">
 
-Backup your Git repositories to S3 easily using a Python (Docker) script.
+  <h2 align="center">Git Backup to S3 📦🚀☁️</h2>
+
+  <p align="center">
+    Backup multiple <b>Git</b> repositories at once to <b>S3</b> easily using a <i>Python script</i> with <b>Docker support</b>.
+  </p>
+</p>
 
 ## Why
 
-I run my own private Gitlab (on-premise). I want to have a security backup of my private projects,
-but I want a script that is fully automatic. The task can be run using a Cron, or inside a k8s
-cluster (CronJob) with Docker.
+I run my own private Gitlab (on-premise). I want a fully automatic periodic script that creates a security backup of my private projects, but just the source code, so it's fast and cheap.
 
-I don't mind if the MRs/Comments are lost, I just want an external backup of the source code.
+## Features
 
-> Requires Docker installed.
+- Tested sources: Gitlab, Github.
+- Backup a list of repos at once.
+- Requires HTTPS.
+- The script zips each repo before uploading it to the cloud storage, so it will be cheap.
 
-## Set up
+> The script should work with any other source that supports **HTTPS**.
 
-## 1. Create gitlab personal access token
+## Docker
 
-https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html
+Soon :D
 
-## 2. Create a AWS S3 bucket
+## Configuration
 
-TODO :D
-
-## 3. Environment
-
-Set up your environment variables inside `.env` file:
+Fill your environment variables inside the `.env` file:
 
 ```
 GIT_USER=
@@ -35,18 +38,26 @@ AWS_S3_BUCKET=
 AWS_REGION=
 ```
 
-Create the file `repos.json`:
+Create the `repos.json` file:
 
 ```
 [
+    "github.com/<user>/<repo>.git",
+    "github.com/<user>/<repo>.git",
     "gitlab.com/<user>/<repo>.git",
-    "gitlab.com/<user>/<repo2>.git",
-    "gitlab.com/<user>/<repo3>.git",
+    "gitlab.com/<user>/<repo>.git",
     ...
 ]
 ```
 
-## 4. Run locally
+## Resources
+
+- [Gitlab create Oauth token](https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html).
+- [Create AWS S3 bucket](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/create-bucket.html).
+
+## Local development
+
+> Requires Docker installed.
 
 ```
 $ make run
