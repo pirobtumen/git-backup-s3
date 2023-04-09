@@ -4,12 +4,14 @@ import json
 import boto3
 import logging
 from botocore.exceptions import ClientError
-
+from datetime import datetime
 
 GIT_TOKEN = os.getenv("GIT_TOKEN")
 GIT_USER = os.getenv("GIT_USER")
 AWS_S3_BUCKET = os.getenv("AWS_S3_BUCKET")
 AWS_REGION = os.getenv("AWS_REGION")
+BACKUP_FREQ = os.getenv("BACKUP_FREQ")
+APPEND_DATE = os.getenv("APPEND_DATE") == "true"
 REPOS_JSON = "repos.json"
 
 
@@ -25,8 +27,7 @@ def get_repos():
 def clone_and_zip(repo_url, repo_path, repo_zip_path):
     repo = git.Repo.clone_from(
         repo_url,
-        to_path=repo_path,
-        multi_options=["-c http.sslVerify=false"])
+        to_path=repo_path)
 
     with open(repo_zip_path, "wb") as zipfile:
         repo.archive(zipfile, format='zip')
@@ -49,11 +50,17 @@ def main():
     for repo in repos:
         repo_url = f'https://{GIT_USER}:{GIT_TOKEN}@{repo}'
         repo_name = repo_url.split("@")[1][:-4].replace("/", "_")
+        print(f"\nCloning: {repo_name}")
+
+        if APPEND_DATE:
+            # Get today's date to append to the backup folder name
+            now = datetime.now()
+            repo_name += f"_{now.strftime('%Y_%m_%d')}"
+
         repo_path = f"./backups/{repo_name}"
         repo_zip_name = f"{repo_name}.zip"
         repo_zip_path = f"{repo_path}.zip"
-
-        print(f"\nCloning: {repo_name}")
+        
         if (os.path.isdir(repo_path)):
             print("-> Repo already exists. Skipping.")
         else:

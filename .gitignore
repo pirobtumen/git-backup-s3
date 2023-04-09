@@ -1,3 +1,4 @@
 .env
 backups
 repos.json
+backup_git.sh
