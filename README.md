@@ -89,5 +89,5 @@ chmod +x backup_git.sh
 You can then add an entry into `crontab`
 
 ```
-0 12 * * * /path/to/backup_git.sh
+0 12 * * * cd ~/git-backup-s3 && ./backup_git.sh
 ```

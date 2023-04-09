@@ -49,7 +49,7 @@ def main():
 
     for repo in repos:
         repo_url = f'https://{GIT_USER}:{GIT_TOKEN}@{repo}'
-        repo_name = repo_url.split("@")[1][:-4].replace("/", "_")
+        repo_name = repo_url.split("@")[1].replace("/", "_")
         print(f"\nCloning: {repo_name}")
 
         if APPEND_DATE:
@@ -60,7 +60,7 @@ def main():
         repo_path = f"./backups/{repo_name}"
         repo_zip_name = f"{repo_name}.zip"
         repo_zip_path = f"{repo_path}.zip"
-        
+
         if (os.path.isdir(repo_path)):
             print("-> Repo already exists. Skipping.")
         else:
