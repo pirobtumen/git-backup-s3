@@ -43,6 +43,7 @@ AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
 AWS_S3_BUCKET=
 AWS_REGION=
+APPEND_DATE=
 ```
 
 Create the `repos.json` file:
@@ -68,4 +69,25 @@ Create the `repos.json` file:
 
 ```
 $ make run
+```
+
+## Running periodically
+
+You can use crontab to run the backup. To do this, create a bash script with the following contents and place it in the root of this repo.
+
+```
+#!/bin/bash
+make run
+```
+
+Then give this bash script executable permissions
+
+```
+chmod +x backup_git.sh
+```
+
+You can then add an entry into `crontab`
+
+```
+0 12 * * * cd ~/git-backup-s3 && ./backup_git.sh
 ```
